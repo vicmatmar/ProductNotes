@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="ManufacturingData">
+  <DataContextMoniker Name="/ManufacturingDataDataContext" />
+  <nestedChildShapes>
+    <classShape Id="b838b96d-967f-4b59-a9ea-67d0d83af84d" absoluteBounds="0.5, 3.375, 2, 3.6939111328124996">
+      <DataClassMoniker Name="/ManufacturingDataDataContext/Product" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d8f56edf-2ac3-4251-90ac-a906e0ddf669" absoluteBounds="0.51500000000000057, 3.835, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="79818a70-4f76-409f-bebb-8c043e15e956" absoluteBounds="3, 2.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/ManufacturingDataDataContext/SerialNumber" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0c46421d-7d34-4903-80ce-ef1ccc8a072c" absoluteBounds="3.0149999999999997, 3.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 4.20274983723958); (3 : 4.20274983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/ManufacturingDataDataContext/Product/Product_SerialNumber" />
+      <nodes>
+        <classShapeMoniker Id="b838b96d-967f-4b59-a9ea-67d0d83af84d" />
+        <classShapeMoniker Id="79818a70-4f76-409f-bebb-8c043e15e956" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5304636e-aaea-4c53-9e30-2e036611046f" absoluteBounds="0.5, 0.625, 2, 2.5401025390625">
+      <DataClassMoniker Name="/ManufacturingDataDataContext/ProductionSite" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6653f3e1-1294-4903-8a79-6141deea28c3" absoluteBounds="0.51499999999999968, 1.085, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cdb2a7fd-bffb-438e-82dd-e39692b778da" absoluteBounds="3, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ManufacturingDataDataContext/EuiList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b35b8e2b-dd72-4872-bc50-ca5e378f1fc0" absoluteBounds="3.015, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4 : 2.32859537760417); (4 : 2.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/ManufacturingDataDataContext/EuiList/EuiList_SerialNumber" />
+      <nodes>
+        <classShapeMoniker Id="cdb2a7fd-bffb-438e-82dd-e39692b778da" />
+        <classShapeMoniker Id="79818a70-4f76-409f-bebb-8c043e15e956" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 1.53929768880208); (3 : 1.53929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ManufacturingDataDataContext/ProductionSite/ProductionSite_EuiList" />
+      <nodes>
+        <classShapeMoniker Id="5304636e-aaea-4c53-9e30-2e036611046f" />
+        <classShapeMoniker Id="cdb2a7fd-bffb-438e-82dd-e39692b778da" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="b4a03785-22a3-48ea-8a4c-414054aa8d84" absoluteBounds="5.5, 3.125, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/ManufacturingDataDataContext/Tester" />
+      <nestedChildShapes>
+        <elementListCompartment Id="16ae4a8e-bca8-4bd7-baae-eb1e62ee836f" absoluteBounds="5.515, 3.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 4.01044840494792); (5 : 4.01044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ManufacturingDataDataContext/Tester/Tester_SerialNumber" />
+      <nodes>
+        <classShapeMoniker Id="b4a03785-22a3-48ea-8a4c-414054aa8d84" />
+        <classShapeMoniker Id="79818a70-4f76-409f-bebb-8c043e15e956" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
