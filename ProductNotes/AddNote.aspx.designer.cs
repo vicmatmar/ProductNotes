@@ -31,15 +31,6 @@ namespace ProductNotes {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
-        /// Panel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
-        
-        /// <summary>
         /// UpdatePanel_Data control.
         /// </summary>
         /// <remarks>
@@ -85,6 +76,15 @@ namespace ProductNotes {
         protected global::System.Web.UI.WebControls.Button ButtonPreviousDay;
         
         /// <summary>
+        /// ButtonNextDay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonNextDay;
+        
+        /// <summary>
         /// ProductsPanel control.
         /// </summary>
         /// <remarks>
@@ -92,5 +92,14 @@ namespace ProductNotes {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel ProductsPanel;
+        
+        /// <summary>
+        /// UpdateProgress_Data control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress UpdateProgress_Data;
     }
 }

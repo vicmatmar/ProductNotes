@@ -7,19 +7,6 @@ using System.Web.UI.WebControls;
 
 namespace ProductNotes
 {
-    class product
-    {
-        public string Serial { get; set; }
-        public int SerialNumberId { get; set; }
-        public int ProductId { get; set; }
-        public int EuiId { get; set; }
-        public int Content { get; set; }
-        public DateTime CreateDate { get; set; }
-        public System.Nullable<System.DateTime> UpdateDate { get; set; }
-        public int TesterId { get; set; }
-        public string Tester { get; set; }
-    }
-
     class product_info
     {
         public string Name;
@@ -29,16 +16,16 @@ namespace ProductNotes
 
     public partial class AddNote : System.Web.UI.Page
     {
-        static int _site_id = 2;
+        static int[] _sites_ids;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Find the las producted tested
+                // Find the last producted tested
                 DateTime date = DateTime.Now;
                 using (ManufacturingDataDataContext dc = new ManufacturingDataDataContext())
                 {
-                    _site_id = dc.ProductionSites.Where(p => p.Name == "Centralite").Select(p => p.Id).First<int>();
+                    _sites_ids = dc.ProductionSites.Where(p => p.Name == "Centralite" || p.Name == "Centralite - SMT").Select(p => p.Id).ToArray<int>();
 
                     List<SerialNumber> ser = new List<SerialNumber>();
                     while (true)
@@ -52,7 +39,6 @@ namespace ProductNotes
                 }
                 TextBox_fromDate.Text = date.Date.ToString();
                 TextBox_toDate.Text = DateTime.Now.ToString();
-
             }
 
             updateData();
@@ -62,39 +48,39 @@ namespace ProductNotes
         List<SerialNumber> getSerials(DateTime fromDate, DateTime toDate)
         {
             List<SerialNumber> serials = new List<SerialNumber>();
-            ManufacturingDataDataContext dc = new ManufacturingDataDataContext();
+            using (ManufacturingDataDataContext dc = new ManufacturingDataDataContext())
+            {
 
-            var ser =
-            dc.SerialNumbers
-            .Where(s =>
-                (s.CreateDate >= fromDate || s.UpdateDate.Value.Date >= fromDate) &&
-                (s.CreateDate < toDate || s.UpdateDate.Value.Date < toDate) &&
-                s.EuiList.ProductionSiteId == _site_id
-                )/*
-            .Select(s => 
-                new product{
-                    Serial = string.Format("{0}{1:000000000}", s.Product.SerialNumberCode, s.Content),
-                    SerialNumberId = s.SerialNumberId,
-                    ProductId = s.ProductId,
-                    EuiId = s.EuiId,
-                    Content = s.Content,
-                    CreateDate = s.CreateDate,
-                    UpdateDate = s.UpdateDate.Value,
-                    TesterId = s.TesterId,
-                    Tester = s.Tester.Name
-                })*/;
+                var ser =
+                dc.SerialNumbers
+                .Where(s =>
+                    (s.CreateDate >= fromDate || s.UpdateDate.Value >= fromDate) &&
+                    (s.CreateDate < toDate || s.UpdateDate.Value < toDate) &&
+                    (s.EuiList.ProductionSiteId == _sites_ids[0] || s.EuiList.ProductionSiteId == _sites_ids[1])
+                    );
 
-            if (ser.Any())
                 serials = ser.ToList<SerialNumber>();
+            }
 
             return serials;
         }
 
         protected void ButtonPreviousDay_Click(object sender, EventArgs e)
         {
-            TimeSpan oneday = new TimeSpan(1, 0, 0, 0);
-            DateTime fromdate = DateTime.Parse(TextBox_fromDate.Text).Subtract(oneday);
-            DateTime todate = DateTime.Parse(TextBox_toDate.Text).Subtract(oneday);
+            DateTime fromdate = DateTime.Parse(TextBox_fromDate.Text).AddDays(-1);
+            //DateTime todate = DateTime.Parse(TextBox_toDate.Text).AddDays(-1);
+            DateTime todate = fromdate.AddDays(1);
+
+            TextBox_fromDate.Text = fromdate.ToString();
+            TextBox_toDate.Text = todate.ToString();
+
+            updateData();
+        }
+
+        protected void ButtonNextDay_Click(object sender, EventArgs e)
+        {
+            DateTime fromdate = DateTime.Parse(TextBox_fromDate.Text).AddDays(+1);
+            DateTime todate = fromdate.AddDays(1);
 
             TextBox_fromDate.Text = fromdate.ToString();
             TextBox_toDate.Text = todate.ToString();
@@ -109,28 +95,16 @@ namespace ProductNotes
             DateTime fromdate = DateTime.Parse(TextBox_fromDate.Text);
             DateTime todate = DateTime.Parse(TextBox_toDate.Text);
 
-            var groups = getSerials(fromdate, todate).OrderBy(s => s.Content).GroupBy(s => s.ProductId);
+            var groups = getSerials(fromdate, todate)
+                .OrderBy(s => s.ProductId).
+                ThenBy(s => s.Content).
+                GroupBy(s => s.ProductId);
 
             bool color_toggle = false;
             foreach (var group in groups)
             {
                 int product_id = group.Key;
                 string idstr = product_id.ToString();
-
-                Panel panel = new Panel();
-                if (color_toggle)
-                    panel.BackColor = System.Drawing.Color.LightGoldenrodYellow;
-                else
-                    panel.BackColor = System.Drawing.Color.WhiteSmoke;
-                color_toggle = !color_toggle;
-
-                Button btn = new Button();
-                btn.UseSubmitBehavior = false;
-                btn.Text = "+";
-                btn.ID = "Button_showdetails" + idstr;
-                btn.Attributes.Add("product_id", idstr);
-                btn.Click += Btn_Click;
-                //panel.Controls.Add(btn);
 
                 product_info product_info = new product_info();
                 using (ManufacturingDataDataContext dc = new ManufacturingDataDataContext())
@@ -144,15 +118,35 @@ namespace ProductNotes
                         }).First();
                 }
 
+                Panel panel = new Panel();
+                if (color_toggle)
+                    panel.BackColor = System.Drawing.Color.LightGray;
+                else
+                    panel.BackColor = System.Drawing.Color.WhiteSmoke;
+                color_toggle = !color_toggle;
+
+
                 Table table = new Table();
                 table.CellSpacing = 10;
                 TableRow row = new TableRow();
 
                 TableCell cell = new TableCell();
-                cell.Controls.Add(btn);
-                row.Cells.Add(cell);
+
+                Button btn = new Button();
+                btn.UseSubmitBehavior = false;
+                btn.Text = "+";
+                btn.ID = "Button_" + idstr;
+                btn.Attributes.Add("product_id", idstr);
+                btn.Click += Btn_Click;
 
                 Label label = new Label();
+                label.Text = "[" + group.Count().ToString() + "]";
+
+                cell.Controls.Add(btn);
+                cell.Controls.Add(label);
+                row.Cells.Add(cell);
+
+                label = new Label();
                 label.Text = product_info.Model;
                 cell = new TableCell();
                 cell.BorderWidth = 1;
@@ -169,10 +163,19 @@ namespace ProductNotes
                 table.Rows.Add(row);
                 panel.Controls.Add(table);
 
-
                 GridView gv = getGrid(group.ToList());
                 gv.Visible = false;
-                gv.BackColor = System.Drawing.Color.White;
+                gv.AllowSorting = true;
+                gv.HorizontalAlign = HorizontalAlign.Justify;
+
+                gv.RowStyle.BackColor = System.Drawing.Color.LightBlue;
+                gv.RowStyle.ForeColor = System.Drawing.Color.DarkBlue;
+
+                gv.AlternatingRowStyle.BackColor = System.Drawing.Color.White;
+                gv.AlternatingRowStyle.ForeColor = System.Drawing.Color.DarkBlue;
+
+                //gv.AlternatingRowStyle.BorderColor = System.Drawing.Color.WhiteSmoke;
+
                 panel.Controls.Add(gv);
 
                 ProductsPanel.Controls.Add(panel);
@@ -185,7 +188,7 @@ namespace ProductNotes
         {
             Button btn = (Button)sender;
             string idstr = btn.Attributes["product_id"];
-            if(btn.Text == "+")
+            if (btn.Text == "+")
                 btn.Text = "-";
             else
                 btn.Text = "+";
@@ -193,7 +196,12 @@ namespace ProductNotes
 
             Control c = FindControl("Gridview" + idstr);
             if (c != null)
-                c.Visible = !c.Visible;
+            {
+                if (btn.Text == "+")
+                    c.Visible = false;
+                else
+                    c.Visible = true;
+            }
         }
 
 
