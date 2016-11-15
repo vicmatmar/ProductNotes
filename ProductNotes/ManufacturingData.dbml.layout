@@ -53,12 +53,18 @@
         <elementListCompartment Id="16ae4a8e-bca8-4bd7-baae-eb1e62ee836f" absoluteBounds="5.515, 3.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 4.01044840494792); (5 : 4.01044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 4.01044840494792); (5 : 4.01044840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ManufacturingDataDataContext/Tester/Tester_SerialNumber" />
       <nodes>
         <classShapeMoniker Id="b4a03785-22a3-48ea-8a4c-414054aa8d84" />
         <classShapeMoniker Id="79818a70-4f76-409f-bebb-8c043e15e956" />
       </nodes>
     </associationConnector>
+    <classShape Id="7352b806-24a7-4dc3-8412-f93c40ed68d6" absoluteBounds="5.75, 0.625, 2, 1.3862939453125">
+      <DataClassMoniker Name="/ManufacturingDataDataContext/ProductNote" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d8e21118-b3ff-44a6-a033-16fb7ff51cc3" absoluteBounds="5.765, 1.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

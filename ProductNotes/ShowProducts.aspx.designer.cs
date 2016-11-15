@@ -58,6 +58,15 @@ namespace ProductNotes {
         protected global::System.Web.UI.WebControls.TextBox TextBox_fromDate;
         
         /// <summary>
+        /// Button_fromCalendar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_fromCalendar;
+        
+        /// <summary>
         /// TextBox_toDate control.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace ProductNotes {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBox_toDate;
+        
+        /// <summary>
+        /// Button_toCalendar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_toCalendar;
         
         /// <summary>
         /// ButtonPreviousDay control.
@@ -83,6 +101,15 @@ namespace ProductNotes {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonNextDay;
+        
+        /// <summary>
+        /// Calendar_Date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar Calendar_Date;
         
         /// <summary>
         /// ProductsPanel control.

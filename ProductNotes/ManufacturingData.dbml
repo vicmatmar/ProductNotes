@@ -68,4 +68,11 @@
       <Association Name="Tester_SerialNumber" Member="SerialNumbers" ThisKey="Id" OtherKey="TesterId" Type="SerialNumber" />
     </Type>
   </Table>
+  <Table Name="dbo.ProductNotes" Member="ProductNotes">
+    <Type Name="ProductNote">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Note" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="EffectiveDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
 </Database>

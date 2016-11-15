@@ -45,6 +45,9 @@ namespace ProductNotes
     partial void InsertTester(Tester instance);
     partial void UpdateTester(Tester instance);
     partial void DeleteTester(Tester instance);
+    partial void InsertProductNote(ProductNote instance);
+    partial void UpdateProductNote(ProductNote instance);
+    partial void DeleteProductNote(ProductNote instance);
     #endregion
 		
 		public ManufacturingDataDataContext() : 
@@ -114,6 +117,14 @@ namespace ProductNotes
 			get
 			{
 				return this.GetTable<Tester>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ProductNote> ProductNotes
+		{
+			get
+			{
+				return this.GetTable<ProductNote>();
 			}
 		}
 	}
@@ -1541,6 +1552,116 @@ namespace ProductNotes
 		{
 			this.SendPropertyChanging();
 			entity.Tester = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProductNotes")]
+	public partial class ProductNote : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Note;
+		
+		private System.DateTime _EffectiveDate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNoteChanging(string value);
+    partial void OnNoteChanged();
+    partial void OnEffectiveDateChanging(System.DateTime value);
+    partial void OnEffectiveDateChanged();
+    #endregion
+		
+		public ProductNote()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Note", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string Note
+		{
+			get
+			{
+				return this._Note;
+			}
+			set
+			{
+				if ((this._Note != value))
+				{
+					this.OnNoteChanging(value);
+					this.SendPropertyChanging();
+					this._Note = value;
+					this.SendPropertyChanged("Note");
+					this.OnNoteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EffectiveDate", DbType="DateTime NOT NULL")]
+		public System.DateTime EffectiveDate
+		{
+			get
+			{
+				return this._EffectiveDate;
+			}
+			set
+			{
+				if ((this._EffectiveDate != value))
+				{
+					this.OnEffectiveDateChanging(value);
+					this.SendPropertyChanging();
+					this._EffectiveDate = value;
+					this.SendPropertyChanged("EffectiveDate");
+					this.OnEffectiveDateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
